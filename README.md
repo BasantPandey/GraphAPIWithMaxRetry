@@ -9,6 +9,7 @@ Graph API With MaxRetry Example
 3. Use Graph Explorer to test your quries
 4. Use Client ID and Client certificate to access to token.
 5. Use [Graph Developer API](https://github.com/pnp/proxy-samples) [Testing tool](<[Title](https://github.com/microsoft/m365-developer-proxy)>) to check the retry attempts in action.
+6. Pnp-Powershell [link](https://pnp.github.io/powershell)
 
 ### Create Site collection
 
@@ -17,6 +18,8 @@ Graph API With MaxRetry Example
    ![Alt text](images/image-1.png)
 
 ### Setup your data
+
+1. use [setup.ps1](./Setup.ps1) file to create list and site columns.
 
 ```
 # Connect Online Site

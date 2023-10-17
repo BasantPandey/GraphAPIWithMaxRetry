@@ -33,17 +33,16 @@ namespace GraphAPIWithMaxRetry
             var spItems = new List<SPItem>();
             string clientId = AppConfig.AADClientId;
             string tenantId = AppConfig.TenantId;
-            X509Certificate2 ClientCertificate = new X509Certificate2(AppConfig.ClientSigningCertificatePath, "");
+           // X509Certificate2 ClientCertificate = new X509Certificate2(AppConfig.ClientSigningCertificatePath, "1");
 
             // Initialize the Confidential Client Application with certificate
             IConfidentialClientApplication confidentialClientApplication = ConfidentialClientApplicationBuilder
             .Create(clientId)
             .WithAuthority($"https://login.microsoftonline.com/{tenantId}")
-            .WithCertificate(ClientCertificate)
+            .WithClientSecret(AppConfig.ClientSecret)
+            //.WithCertificate(ClientCertificate)
             .Build();
 
-            var scopes1 = new[] { "https://graph.microsoft.com/.default" };
-            var authResult1 = await confidentialClientApplication.AcquireTokenForClient(scopes1).ExecuteAsync();
             var MaxRetry = 3;
             var authProvider = new DelegateAuthenticationProvider(async (requestMessage) =>
             {
@@ -51,8 +50,8 @@ namespace GraphAPIWithMaxRetry
                 var authResult = await confidentialClientApplication.AcquireTokenForClient(scopes).ExecuteAsync();
                 requestMessage.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", authResult.AccessToken);
             });
-            var selectedList = "787288c7-077e-4d75-9174-a26ff91164d3";
-            var siteInformationModelSiteGuid = "cb18ccad-efcd-4d41-b3f4-94213340e636";
+            var selectedList = "60be66d7-95dc-494a-82c8-226642fbb6a5";
+            var siteInformationModelSiteGuid = "285c9600-eb55-4263-a1cc-afb99eba839c";
             List<Task> tasks = new List<Task>();
             var graphClient = new GraphServiceClient(authProvider);
             try
@@ -112,7 +111,8 @@ namespace GraphAPIWithMaxRetry
                     }
                     catch (Exception ex)
                     {
-
+                        Console.WriteLine(ex.Message);
+                        Console.ReadKey();
                     }
 
                     string GetValueByFieldName(FieldValueSet _listItemFields, string field)
@@ -131,7 +131,14 @@ namespace GraphAPIWithMaxRetry
                 Console.Read();
                 string GetallColumns()
                 {
-                    List<string> columns = new List<string>() { FieldsName.YesNo.ToString(), FieldsName.ChoiceCheckBox.ToString(), FieldsName.MMSCol.ToString(), FieldsName.DateOnly.ToString(), FieldsName.choiceDropdown.ToString() };
+                    List<string> columns = new List<string>() {
+                        FieldsName.Person.ToString(),
+                        //FieldsName.YesNo.ToString(), 
+                        //FieldsName.ChoiceCheckBox.ToString(), 
+                        //FieldsName.MMSCol.ToString(), 
+                        //FieldsName.DateOnly.ToString(), 
+                        FieldsName.choiceDropdown.ToString() 
+                    };
                     return string.Join(",", columns.ToArray());
                 }
             }

@@ -21,4 +21,6 @@ public static class AppConfig
     public static string TenantId => Configuration["TenantId"];
     public static string ClientSigningCertificatePath => Configuration["AppClientCert"];
     public static string ClientSecret => Configuration["ClientSecret"];
+    public static string SiteId => Configuration["SiteId"];
+    public static string ListId => Configuration["ListId"];
 }

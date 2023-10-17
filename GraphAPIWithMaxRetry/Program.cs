@@ -50,8 +50,8 @@ namespace GraphAPIWithMaxRetry
                 var authResult = await confidentialClientApplication.AcquireTokenForClient(scopes).ExecuteAsync();
                 requestMessage.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", authResult.AccessToken);
             });
-            var selectedList = "60be66d7-95dc-494a-82c8-226642fbb6a5";
-            var siteInformationModelSiteGuid = "285c9600-eb55-4263-a1cc-afb99eba839c";
+            var selectedList = AppConfig.ListId; //"60be66d7-95dc-494a-82c8-226642fbb6a5";
+            var siteInformationModelSiteGuid = AppConfig.SiteId; //"285c9600-eb55-4263-a1cc-afb99eba839c";
             List<Task> tasks = new List<Task>();
             var graphClient = new GraphServiceClient(authProvider);
             try
